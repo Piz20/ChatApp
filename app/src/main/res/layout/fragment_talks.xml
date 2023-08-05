@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black"
+    tools:context=".TalksFragment">
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recent_chat_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+    <ProgressBar
+        android:id="@+id/recent_chat_progressbar"
+        android:layout_width="@dimen/_40pxh"
+        android:layout_height="@dimen/_40sp"
+        android:layout_centerInParent="true"/>
+    <TextView
+        android:id="@+id/no_talks_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/_20sp"
+        android:layout_centerInParent="true"
+        android:textColor="@color/white"
+        android:visibility="gone"
+        android:text="GO AND TALK TO SOMEONE..."/>
+</RelativeLayout>

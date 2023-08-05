@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_margin="@dimen/_10pxv"
+    android:background="@drawable/rectangle_bg_white_a700_border_black_900_radius_18"
+    android:id="@+id/recent_chat_linearlayout"
+    android:visibility="gone"
+    android:elevation="@dimen/_2pxh"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <include
+        layout="@layout/profile_picture_view"
+        android:layout_width="@dimen/_52sp"
+        android:layout_height="@dimen/_52pxh"
+        android:layout_gravity="center"
+        android:layout_margin="@dimen/_10sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.vanniktech.emoji.EmojiTextView
+                android:id="@+id/username_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="Username"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_17sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/last_message_date_text"
+                android:layout_marginEnd="@dimen/_10sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:textColor="@color/black"
+                tools:text="10:00" />
+        </RelativeLayout>
+
+        <com.vanniktech.emoji.EmojiTextView
+            android:id="@+id/last_message_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            tools:text="Hey Dude"
+            android:ellipsize="end"
+            android:textColor="@color/black" />
+    </LinearLayout>
+</LinearLayout>

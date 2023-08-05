@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".TalkWithHomieActivity">
+
+    <RelativeLayout
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:padding="@dimen/_10sp">
+
+        <include
+            android:id="@+id/profile_picture_view"
+            layout="@layout/profile_picture_view"
+            android:layout_width="@dimen/_48pxh"
+            android:layout_height="@dimen/_48pxh"
+            android:layout_marginStart="@dimen/_30sp" />
+
+        <TextView
+            android:id="@+id/username_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginStart="@dimen/_10sp"
+            android:layout_toRightOf="@id/profile_picture_view"
+            android:text="Username"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_20sp"
+            android:textStyle="bold" />
+
+        <ImageButton
+            android:id="@+id/back_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="@dimen/_7sp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/back_button" />
+    </RelativeLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/chat_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/toolbar"
+        android:layout_above="@id/bottom_layout"
+        android:background="@color/black" />
+    <RelativeLayout
+        android:id="@+id/bottom_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/black"
+        android:layout_alignParentBottom="true"
+        android:padding="@dimen/_5sp">
+
+        <ImageButton
+            android:id="@+id/emojiButton"
+            android:layout_width="@dimen/_35sp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:src="@drawable/ic_emogi"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:layout_centerInParent="true"
+            android:textSize="20sp" />
+
+        <com.vanniktech.emoji.EmojiEditText
+            android:id="@+id/message_edittext"
+            android:layout_width="@dimen/_710pxh"
+            android:layout_height="wrap_content"
+            android:maxHeight="@dimen/_130pxh"
+            android:layout_marginStart="@dimen/_3sp"
+            android:layout_centerInParent="true"
+            android:layout_toEndOf="@id/emojiButton"
+            android:imeOptions="actionSend"
+            android:layout_toStartOf="@+id/send_message_button"
+            android:background="@drawable/rectangle_bg_white_a700_border_black_900_radius_18"
+            android:elevation="@dimen/_10sp"
+            android:hint="Just communicate..."
+            android:textColorHint="@color/black"
+            android:textColor="@color/black"
+            android:isScrollContainer="true"
+            android:maxLines="10"
+            android:singleLine="false"
+            android:scrollHorizontally="false"
+            android:inputType="textMultiLine|textAutoCorrect|textCapSentences"
+            android:textSize="@dimen/_17sp"
+            android:padding="@dimen/_10pxh" />
+
+        <ImageButton
+            android:id="@+id/send_message_button"
+            android:layout_width="@dimen/_48sp"
+            android:layout_height="@dimen/_48sp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerInParent="true"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_send_impossible" />
+
+
+    </RelativeLayout>
+</RelativeLayout>

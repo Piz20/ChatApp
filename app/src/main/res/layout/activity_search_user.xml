@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".SearchUserActivity">
+
+    <RelativeLayout
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/black"
+        android:padding="@dimen/_10sp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginStart="@dimen/_10sp"
+            android:text="Looking for Homies..."
+            android:textColor="@color/white"
+            android:textSize="@dimen/_20sp"
+            android:textStyle="bold" />
+
+        <ImageButton
+            android:id="@+id/back_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="@dimen/_7sp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/back_button"
+            app:tint="@color/white"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/search_user_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/toolbar"
+        android:layout_margin="@dimen/_10pxh">
+
+        <com.vanniktech.emoji.EmojiEditText
+            android:id="@+id/search_user_edittext"
+            android:layout_width="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_height="@dimen/_39pxh"
+            android:layout_marginStart="@dimen/_80pxh"
+            android:background="@drawable/rectangle_bg_white_a700_border_black_900_radius_18"
+            android:hint="Type a username or a phonenumber"
+            android:maxLength="35"
+            android:elevation="@dimen/_20pxh"
+            android:padding="@dimen/_4sp"
+            android:textSize="@dimen/_15sp" />
+
+        <ImageButton
+            android:id="@+id/search_user_button"
+            android:layout_width="@dimen/_40sp"
+            android:layout_height="@dimen/_40sp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@id/search_user_edittext"
+            android:layout_margin="@dimen/_10pxh"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/icon_search"
+            app:tint="@color/black" />
+    </RelativeLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/search_user_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/search_user_layout"
+        android:background="@color/white"
+        android:padding="@dimen/_10pxh" />
+    <ProgressBar
+        android:id="@+id/find_homie_progressbar"
+        android:layout_width="@dimen/_40pxh"
+        android:layout_height="@dimen/_40pxh"
+        android:layout_below="@id/no_homies_textView"
+        android:layout_centerInParent="true"
+        android:visibility="gone"
+        android:gravity="center" />
+
+
+    <TextView
+        android:id="@+id/no_homies_textView"
+        android:layout_width="@dimen/_200pxh"
+        android:layout_height="@dimen/_80pxh"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="@dimen/_150pxh"
+        android:gravity="center"
+        android:text="NO HOMIE ? FIND'EM"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_18pxh" />
+
+</RelativeLayout>

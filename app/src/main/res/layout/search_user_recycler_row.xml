@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@drawable/rectangle_bg_white_a700_border_black_900_radius_18"
+    android:backgroundTint="@color/black"
+    android:layout_margin="@dimen/_10pxv"
+    android:elevation="@dimen/_2pxh">
+    <include layout ="@layout/profile_picture_view"
+        android:layout_width="@dimen/_52sp"
+        android:layout_height="@dimen/_52pxh"
+        android:layout_gravity="center"
+        android:layout_margin="@dimen/_10sp"/>
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_gravity="center">
+    <com.vanniktech.emoji.EmojiTextView
+        android:id="@+id/username_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="Username"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_17sp"
+        android:textStyle="bold"
+        />
+    <TextView
+        android:id="@+id/phone_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        tools:text="+000000000"/>
+</LinearLayout>
+</LinearLayout>
