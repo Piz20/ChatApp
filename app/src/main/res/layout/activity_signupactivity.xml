@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <LinearLayout
+    android:id="@+id/signup_linearlayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:clickable="true">
 <RelativeLayout
 
     android:id="@+id/main_toolbar"
@@ -25,134 +27,150 @@
         android:textSize="@dimen/_20sp"
         android:textStyle="bold" />
 </RelativeLayout>
-<ScrollView android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/black">
-<LinearLayout android:gravity="center_horizontal"
-    android:id="@+id/linearSignUpActivity"
-    android:layout_height="wrap_content"
-    android:layout_width="match_parent"
-    android:orientation="vertical"
-    style="@style/groupStyleblack_900"
-   >
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/black">
 
-    <ImageView
-        android:id="@+id/imageChhutOne"
-        android:layout_width="@dimen/_114pxh"
-        android:layout_height="@dimen/_97pxh"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginStart="@dimen/_14pxh"
-        android:layout_marginTop="@dimen/_59pxv"
-        android:layout_marginEnd="@dimen/_14pxh"
-        android:scaleType="fitXY"
-        android:src="@drawable/img_chhut1" />
-
-    <LinearLayout android:gravity="start"
-            android:id="@+id/linearColumnlanguage"
+        <LinearLayout
+            android:id="@+id/linearSignUpActivity"
+            style="@style/groupStyleblack_900"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/_20pxv"
-            android:layout_marginEnd="@dimen/_14pxh"
-            android:layout_marginStart="@dimen/_14pxh"
-            android:layout_marginTop="@dimen/_70pxv"
-            android:layout_width="match_parent" android:orientation="vertical">
-            <LinearLayout android:id="@+id/linearRowlanguage"
-                android:layout_height="wrap_content"
-                android:layout_width="match_parent" android:orientation="horizontal">
-                <TextView android:ellipsize="end"
-                    android:id="@+id/txtLanguage"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/_14pxv"
-                    android:layout_marginTop="@dimen/_4pxv"
-                    android:layout_weight="0.36"
-                    android:layout_width="0dp" android:singleLine="true"
-                    android:text="@string/msg_username"
-                    style="@style/txtInterregular14" tools:text="@string/msg_username"/>
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
 
-                <com.vanniktech.emoji.EmojiEditText
-                    android:id="@+id/username_field"
-                    android:layout_width="@dimen/_195pxh"
-                    android:layout_height="@dimen/_36pxv"
-                    android:maxLength="20"
-                    android:textColorHint="@color/black"
-                    android:hint="  Your username"
-                    android:background="@drawable/rectangle_bg_white_a700_border_black_900_radius_18"
-                    android:textColor="@color/black"
-                    tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck"
-                    android:inputType="textPersonName" />
-            </LinearLayout>
-            <LinearLayout android:id="@+id/linearRowlanguageOne"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_54pxv"
-                android:layout_width="match_parent" android:orientation="horizontal">
 
-                <com.hbb20.CountryCodePicker
-                    android:id="@+id/countryCodePicker"
-                    android:layout_width="0dp"
+            <ImageView
+                android:id="@+id/imageChhutOne"
+                android:layout_width="@dimen/_114pxh"
+                android:layout_height="@dimen/_97pxh"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginStart="@dimen/_14pxh"
+                android:layout_marginTop="@dimen/_59pxv"
+                android:layout_marginEnd="@dimen/_14pxh"
+                android:scaleType="fitXY"
+                android:src="@drawable/img_chhut1" />
+
+            <LinearLayout
+                android:id="@+id/linearColumnlanguage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_14pxh"
+                android:layout_marginTop="@dimen/_70pxv"
+                android:layout_marginEnd="@dimen/_14pxh"
+                android:layout_marginBottom="@dimen/_20pxv"
+                android:gravity="start"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/linearRowlanguage"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:layout_marginBottom="20dp"
-                    android:layout_weight="0.37"
-                    app:ccp_contentColor="@color/white"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/txtLanguage"
+                        style="@style/txtInterregular14"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_4pxv"
+                        android:layout_marginBottom="@dimen/_18pxv"
+                        android:layout_weight="0.36"
+                        android:ellipsize="end"
+                        android:singleLine="true"
+                        android:text="@string/msg_username"
+                        tools:text="@string/msg_username" />
+
+                    <com.vanniktech.emoji.EmojiEditText
+                        android:id="@+id/username_field"
+                        android:layout_width="@dimen/_195pxh"
+                        android:layout_height="@dimen/_36pxv"
+                        android:background="@drawable/rectangle_bg_white_a700_border_black_900_radius_18"
+                        android:hint="  Your username"
+                        android:inputType="textPersonName"
+                        android:maxLength="20"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/black"
+                        tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/linearRowlanguageOne"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_54pxv"
+                    android:orientation="horizontal">
+
+                    <com.hbb20.CountryCodePicker
+                        android:id="@+id/countryCodePicker"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/_4sp"
+                        android:layout_marginBottom="20dp"
+                        android:layout_weight="0.37"
+                        android:singleLine="true"
+                        app:ccpDialog_background="@color/white"
+                        app:ccp_contentColor="@color/white"
+                        app:ccp_defaultNameCode="CM"
+                        app:ccp_showNameCode="false"
+                        app:ccp_showPhoneCode="true" />
+
+
+                    <EditText
+                        android:id="@+id/phone_number_field"
+                        android:layout_width="@dimen/_195pxh"
+                        android:layout_height="@dimen/_36pxv"
+                        android:background="@drawable/rectangle_bg_white_a700_border_black_900_radius_18"
+                        android:hint=" Your phone number"
+                        android:inputType="phone"
+                        android:maxLength="20"
+                        android:textColor="@color/black"
+                        android:textColorHint="@color/black"
+                        tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
+
+                </LinearLayout>
+
+                <ProgressBar
+                    android:id="@+id/registration_progressbar"
+                    android:layout_width="@dimen/_20sp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:indeterminateTint="@color/white"
+                    android:paddingTop="@dimen/_20sp" />
+
+                <Button
+                    android:id="@+id/button_signup"
+                    style="@style/txt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginStart="@dimen/_38pxh"
+                    android:layout_marginTop="@dimen/_25pxv"
+                    android:layout_marginEnd="@dimen/_38pxh"
+                    android:ellipsize="end"
+                    android:onClick="onButtonClick"
+                    android:padding="@dimen/_8pxv"
                     android:singleLine="true"
-                    app:ccp_defaultNameCode="CM"
-                    app:ccp_showPhoneCode="true"
-                    app:ccpDialog_background="@color/white"
-                    app:ccp_showNameCode="false"/>
+                    android:text="@string/lbl_sign_up"
+                    tools:text="@string/lbl_sign_up" />
 
-                <EditText
-                    android:id="@+id/phone_number_field"
-                    android:layout_width="@dimen/_195pxh"
-                    android:layout_height="@dimen/_36pxv"
-                    android:hint=" Your phone number"
-                    android:textColorHint="@color/black"
-                    android:maxLength="20"
-                    android:inputType="phone"
-                    android:background="@drawable/rectangle_bg_white_a700_border_black_900_radius_18"
-                    android:textColor="@color/black"
-                    tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
-
+                <Button
+                    android:id="@+id/button_login"
+                    style="@style/txtInterregular14"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginStart="@dimen/_38pxh"
+                    android:layout_marginTop="@dimen/_10pxv"
+                    android:layout_marginEnd="@dimen/_38pxh"
+                    android:onClick="onButtonClick"
+                    android:padding="@dimen/_8pxv"
+                    android:text="@string/msg_already_have_an"
+                    tools:text="@string/msg_already_have_an" />
             </LinearLayout>
-            <ProgressBar
-                android:id="@+id/registration_progressbar"
-                android:layout_width="@dimen/_20sp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:paddingTop="@dimen/_20sp"/>
-
-            <Button
-                android:id="@+id/button_signup"
-                android:layout_gravity="center_horizontal"
-                style="@style/txt"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_38pxh"
-                android:layout_marginTop="@dimen/_25pxv"
-                android:layout_marginEnd="@dimen/_38pxh"
-                android:ellipsize="end"
-                android:singleLine="true"
-                android:text="@string/lbl_sign_up"
-                tools:text="@string/lbl_sign_up"
-                android:onClick="onButtonClick"
-                android:padding="@dimen/_8pxv"
-               />
-
-            <Button
-                android:id="@+id/button_login"
-                style="@style/txtInterregular14"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginStart="@dimen/_38pxh"
-                android:layout_marginTop="@dimen/_10pxv"
-                android:layout_marginEnd="@dimen/_38pxh"
-                android:text="@string/msg_already_have_an"
-                tools:text="@string/msg_already_have_an"
-                android:onClick="onButtonClick"
-                android:padding="@dimen/_8pxv"
-                />
         </LinearLayout>
-    </LinearLayout>
 
-</ScrollView>
+    </ScrollView>
 </LinearLayout>

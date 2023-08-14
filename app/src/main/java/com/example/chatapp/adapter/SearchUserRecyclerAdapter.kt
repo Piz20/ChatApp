@@ -9,7 +9,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.chatapp.R
-import com.example.chatapp.TalkWithHomieActivity
+import com.example.chatapp.activities.TalkWithHomieActivity
 import com.example.chatapp.models.User
 import com.example.chatapp.utils.AndroidUtil
 import com.example.chatapp.utils.FirebaseUtil
@@ -45,6 +45,11 @@ class SearchUserRecyclerAdapter(
         if (users[position].getUid().trim('"').equals(FirebaseUtil.currentUserId())) {
             holder.usernameText.text = users[position].getUsername() + " (Me)"
         }
+        FirebaseUtil.getOtherUserProfilePicStorageReference(users[position].getUid()).downloadUrl
+                .addOnSuccessListener {
+                    AndroidUtil.setProfilePic(context,it,holder.profilePic)
+                }
+
         holder.itemView.setOnClickListener {
             val intent = Intent(context, TalkWithHomieActivity::class.java)
             AndroidUtil.passUserModelAsIntent(intent, users[position])

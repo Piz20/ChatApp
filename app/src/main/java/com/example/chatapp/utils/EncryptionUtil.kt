@@ -27,6 +27,7 @@ object EncryptionUtil {
     }
 
     fun decrypt(encryptedText: String, context: Context): String {
+
         val encryptedBytesWithIV = Base64.decode(encryptedText, Base64.DEFAULT)
 
         val ivSize = 12

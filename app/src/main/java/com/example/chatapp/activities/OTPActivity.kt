@@ -1,4 +1,4 @@
-package com.example.chatapp
+package com.example.chatapp.activities
 
 import android.content.Context
 import android.content.Intent
@@ -15,8 +15,8 @@ import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.annotation.RequiresApi
+import com.example.chatapp.R
 import com.example.chatapp.models.User
-import com.example.chatapp.utils.AndroidUtil
 import com.example.chatapp.utils.FirebaseUtil
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.FirebaseException
@@ -50,7 +50,7 @@ class OTPActivity : BaseActivity() {
         codeEditText = findViewById(R.id.code_field)
         resendcodeTextView = findViewById(R.id.resend_code_button)
         entercodeTextView = findViewById(R.id.txtENTERTHECODE)
-        phonenumber = intent.getStringExtra("phoneNumber").toString()
+        phonenumber = intent.getStringExtra("phonenumber").toString()
         username = intent.getStringExtra("username").toString()
         progressBar = findViewById(R.id.send_code_progressbar)
         otpLayout = findViewById(R.id.linearOTPActivity)
@@ -63,15 +63,18 @@ class OTPActivity : BaseActivity() {
         }
     }
 
+    //delete All sharedPreferences
+    fun deleteAllSharedPreferences(){
+        val editor = sharedPreferences.edit()
+        editor.clear()
+        editor.apply()
+    }
     fun setPreferences(
-        sharedPreferences: SharedPreferences,
-        username: String,
-        phonenumber: String
+        sharedPreferences: SharedPreferences, username: String="", phonenumber: String=""
     ) {
         val editor = sharedPreferences.edit()
         editor.putString(
-            "username",
-            username
+            "username", username
         )
         editor.putString("phonenumber", phonenumber)
         editor.apply()
@@ -100,7 +103,7 @@ class OTPActivity : BaseActivity() {
                     try {
                         val credential: PhoneAuthCredential =
                             PhoneAuthProvider.getCredential(verificationCode, enteredCode)
-                        signIn(credential, view)
+                        signIn(credential)
                     } catch (e: UninitializedPropertyAccessException) {
                         setInProgress(false)
                         showSnackBar(
@@ -117,28 +120,35 @@ class OTPActivity : BaseActivity() {
     private fun setupUi() {
         codeEditText.gravity = Gravity.CENTER
         codeEditText.setSelection(codeEditText.text.length / 2)
-        val message = getString(R.string.msg_enter_the_code) + phonenumber
-        entercodeTextView.setText(message)
-
+        val intention: String? = intent.getStringExtra("intention")
+        if (intention == null) {
+            val message = getString(R.string.msg_enter_the_code) + phonenumber
+            entercodeTextView.setText(message)
+        } else if (intention == "delete") {
+            val message =
+                getString(R.string.msg_enter_the_code) + phonenumber + " TO DELETE THIS ACCOUNT"
+            entercodeTextView.setText(message)
+        } else if (intention == "updatephonenumber") {
+            val message =
+                getString(R.string.msg_enter_the_code) + phonenumber + " TO UPDATE YOUR PHONE NUMBER"
+            entercodeTextView.setText(message)
+        }
     }
 
     //function that handle the otp code sent to the user
     private fun sendOtp(phoneNumber: String, isResend: Boolean) {
         startResendTimer()
         setInProgress(true)
-        val builder = PhoneAuthOptions.newBuilder(mAuth)
-            .setPhoneNumber(phoneNumber)
-            .setTimeout(60, TimeUnit.SECONDS)
-            .setActivity(this)
+        val builder = PhoneAuthOptions.newBuilder(mAuth).setPhoneNumber(phoneNumber)
+            .setTimeout(60, TimeUnit.SECONDS).setActivity(this)
             .setCallbacks(object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
                 @RequiresApi(Build.VERSION_CODES.O)
                 override fun onVerificationCompleted(phoneAuthCredential: PhoneAuthCredential) {
-                    signIn(phoneAuthCredential, otpLayout)
                     setInProgress(false)
                 }
 
                 override fun onVerificationFailed(exception: FirebaseException) {
-                    showSnackBar( "Code verification failed")
+                    showSnackBar("Code verification failed").show()
                     setInProgress(false)
                 }
 
@@ -149,7 +159,7 @@ class OTPActivity : BaseActivity() {
                     super.onCodeSent(verifcationId, forceResengdingToken)
                     verificationCode = verifcationId
                     resendingToken = forceResengdingToken
-                    showSnackBar( "Code sent succesfully")
+                    showSnackBar("Code sent succesfully").show()
                     setInProgress(false)
 
                 }
@@ -170,13 +180,6 @@ class OTPActivity : BaseActivity() {
         }
     }
 
-    fun showSnackBar(msg: String) {
-        Snackbar.make(
-            this.findViewById(android.R.id.content),
-            msg,
-            Snackbar.LENGTH_SHORT
-        ).show()
-    }
 
     //To control the visibility of the progreesBar
     fun setInProgress(inProgress: Boolean) {
@@ -190,78 +193,158 @@ class OTPActivity : BaseActivity() {
 
     //To handle the Signin or the Signup of the user
     @RequiresApi(Build.VERSION_CODES.O)
-    private fun signIn(phoneAuthCredential: PhoneAuthCredential, view: View) {
-
+    private fun signIn(phoneAuthCredential: PhoneAuthCredential) {
         setInProgress(true)
-        //We begin by verifying all the collection if there is an existing user with the given phonenumber
-        mAuth.signInWithCredential(phoneAuthCredential)
-            .addOnCompleteListener { task ->
+
+        val intention = intent.getStringExtra("intention")
+        //If this activity was trigerred to update phoneneumber
+        if (intention == "updatephonenumber")
+            FirebaseAuth.getInstance().currentUser!!.unlink(PhoneAuthProvider.PROVIDER_ID).addOnSuccessListener {
+                FirebaseAuth.getInstance().currentUser!!.linkWithCredential(phoneAuthCredential).addOnSuccessListener {
+                    FirebaseUtil.currentUserDetails()
+                        .update("phonenumber", phonenumber)
+                        .addOnSuccessListener {
+                            setInProgress(false)
+                            showSnackBar(
+                                "Phone number updated succesfully"
+                            ).addCallback(object : Snackbar.Callback() {
+                                override fun onDismissed(
+                                    transientBottomBar: Snackbar?, event: Int
+                                ) {
+                                    startMainActivity()
+                                }
+                            }).show()
+                            setPreferences(sharedPreferences,phonenumber=phonenumber)
+                        }
+                        .addOnFailureListener {
+                            println(it.message)
+                            showSnackBar(
+                                "We got a problem"
+                            ).addCallback(object : Snackbar.Callback() {
+                                override fun onDismissed(
+                                    transientBottomBar: Snackbar?, event: Int
+                                ) {
+                                    startMainActivity()
+                                }
+                            }).show()
+                        }
+
+                }.addOnFailureListener {
+                    println(it.message)
+                    showSnackBar(
+                        "We got a problem"
+                    ).addCallback(object : Snackbar.Callback() {
+                        override fun onDismissed(
+                            transientBottomBar: Snackbar?, event: Int
+                        ) {
+                            startMainActivity()
+                        }
+                    }).show()
+                }
+            }.addOnFailureListener{
+                println(it.message)
+                showSnackBar(
+                    "We got a problem"
+                ).addCallback(object : Snackbar.Callback() {
+                    override fun onDismissed(
+                        transientBottomBar: Snackbar?, event: Int
+                    ) {
+                        startMainActivity()
+                    }
+                }).show()
+            }
+
+        //If this activity was trigerred to delete an account
+        if (intention == "delete") {
+            FirebaseUtil.reauthenticate(phoneAuthCredential).addOnSuccessListener {
+                FirebaseUtil.currentUserDetails().delete()
+                    .addOnSuccessListener {
+                        FirebaseAuth.getInstance().currentUser!!.delete().addOnSuccessListener {
+                            setInProgress(false)
+                            deleteAllSharedPreferences()
+                            showSnackBar(
+                                "Farewell..."
+                            ).addCallback(object : Snackbar.Callback() {
+                                override fun onDismissed(
+                                    transientBottomBar: Snackbar?, event: Int
+                                ) {
+                                    startSignupActivity()
+                                }
+                            }).show()
+                        }.addOnFailureListener {
+                            showSnackBar("We got a problem").show()
+                            println(it.message)
+                            setInProgress(false)
+                        }
+                    }.addOnFailureListener {
+                        showSnackBar("We got a problem").show()
+                        println(it.message)
+                        setInProgress(false)
+                    }
+            }.addOnFailureListener {
+                showSnackBar("We got a problem").show()
+                println(it.message)
+                setInProgress(false)
+            }
+        }
+        //If this activity was trigerred To login or signup
+        if (intention == null) {
+            FirebaseUtil.signIn(phoneAuthCredential).addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     //if this user already exists we just sign in
                     FirebaseUtil.usersCollection().whereEqualTo("phonenumber", phonenumber).get()
                         .addOnSuccessListener {
                             if (!it.isEmpty) {
-                                FirebaseUtil.signIn(phoneAuthCredential)
-                                setInProgress(false)
-                                AndroidUtil.showSnackBar(
-                                    view,
-                                    "Welcome back homie..."
-                                ).addCallback(object : Snackbar.Callback() {
-                                    override fun onDismissed(
-                                        transientBottomBar: Snackbar?,
-                                        event: Int
-                                    ) {
-                                        startMainActivity()
-                                    }
-                                })
-                                    .show()
-                                setPreferences(sharedPreferences, username, phonenumber)
+                                        setInProgress(false)
+                                        showSnackBar(
+                                            "Welcome back homie..."
+                                        ).addCallback(object : Snackbar.Callback() {
+                                            override fun onDismissed(
+                                                transientBottomBar: Snackbar?, event: Int
+                                            ) {
+                                                startMainActivity()
+                                            }
+                                        }).show()
+                                        setPreferences(sharedPreferences, username, phonenumber)
+
+
                             } else {
                                 // if that user does not exists we creat him
-                                val user = FirebaseUtil.currentUserId()
-                                    ?.let {
-                                        User(
-                                            it,
-                                            username,
-                                            phonenumber,
-                                            Calendar.getInstance().time
-                                        )
-                                    }
+                                val user = FirebaseUtil.currentUserId()?.let {
+                                    User(
+                                        it,
+                                        username,
+                                        phonenumber,
+                                        Calendar.getInstance().time,
+                                    )
+                                }
 
                                 if (user != null) {
-                                    FirebaseUtil.currentUserDetails()
-                                        .set(user)
+                                    FirebaseUtil.currentUserDetails().set(user)
                                         .addOnSuccessListener {
                                             setInProgress(false)
-                                            AndroidUtil.showSnackBar(
-                                                view,
+                                            showSnackBar(
                                                 "Welcome homie..."
                                             ).addCallback(object : Snackbar.Callback() {
                                                 override fun onDismissed(
-                                                    transientBottomBar: Snackbar?,
-                                                    event: Int
+                                                    transientBottomBar: Snackbar?, event: Int
                                                 ) {
                                                     startMainActivity()
                                                 }
-                                            })
-                                                .show()
+                                            }).show()
                                             setPreferences(sharedPreferences, username, phonenumber)
 
-                                        }
-                                        .addOnFailureListener { exception ->
+                                        }.addOnFailureListener { exception ->
                                             print(exception)
                                             setInProgress(false)
-                                            AndroidUtil.showSnackBar(
-                                                view,
+                                            showSnackBar(
                                                 "We got a problem..."
                                             ).addCallback(object : Snackbar.Callback() {
                                                 override fun onDismissed(
-                                                    transientBottomBar: Snackbar?,
-                                                    event: Int
+                                                    transientBottomBar: Snackbar?, event: Int
                                                 ) {
                                                 }
-                                            })
-                                                .show()
+                                            }).show()
 
 
                                         }
@@ -269,19 +352,19 @@ class OTPActivity : BaseActivity() {
 
 
                             }
-                        }
-                        .addOnFailureListener {
-                            AndroidUtil.showSnackBar(view, "We got a problem...")
+                        }.addOnFailureListener {
+                            showSnackBar("We got a problem...").show()
                         }
 
 
                 } else {
                     setInProgress(false)
-                    showSnackBar( "Wrong validation code!")
+                    showSnackBar("Wrong validation code!").show()
                     val exception = task.exception
                     Log.e("Authentification", "Error: ${exception?.message}")
                 }
             }
+        }
     }
 
     // To handle the resend code button
@@ -313,6 +396,12 @@ class OTPActivity : BaseActivity() {
     //To launch our MainActivity
     fun startMainActivity() {
         val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
+
+    fun startSignupActivity() {
+        val intent = Intent(this, SignupActivity::class.java)
         startActivity(intent)
         finish()
     }

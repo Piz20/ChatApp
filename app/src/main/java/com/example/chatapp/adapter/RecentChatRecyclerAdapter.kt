@@ -12,7 +12,8 @@ import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import com.example.chatapp.R
-import com.example.chatapp.TalkWithHomieActivity
+import com.example.chatapp.activities.TalkWithHomieActivity
+import com.example.chatapp.interfaces.UiListener
 import com.example.chatapp.models.ChatRoom
 import com.example.chatapp.models.User
 import com.example.chatapp.utils.AndroidUtil
@@ -25,6 +26,8 @@ import java.util.Calendar
 class RecentChatRecyclerAdapter(
     options: FirestoreRecyclerOptions<ChatRoom?>, context: Context, private val ui: UiListener
 ) : FirestoreRecyclerAdapter<ChatRoom?, RecentChatRecyclerAdapter.ChatRoomViewHolder>(options) {
+
+    var chatRoomList : MutableList<ChatRoom> = mutableListOf()
 
 
     override fun onCreateViewHolder(
@@ -43,52 +46,68 @@ class RecentChatRecyclerAdapter(
         model.getUserIds()?.let {
             FirebaseUtil.getOtherUserFromChatRoom(it).get().addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    val isLastMessageHasBeenSentByMe =
-                        model.getLastMessageSenderId() == FirebaseUtil.currentUserId()
-                    val secondUser: User? = task.result.toObject(User::class.java)
-                    holder.usernameTextView.text = secondUser!!.getUsername()
-                    try {
-                        if (isLastMessageHasBeenSentByMe) {
-                            holder.lastMessageTextView.text = "You : " + EncryptionUtil.decrypt(
-                                model.getLastMessage(), context
+                        val secondUser: User? = task.result.toObject(User::class.java)
+                        if (secondUser != null) {
+                            chatRoomList.add(model)
+                        }
+                        if (secondUser != null) {
+                            FirebaseUtil.getOtherUserProfilePicStorageReference(secondUser.getUid()).downloadUrl
+                                .addOnSuccessListener {
+                                    AndroidUtil.setProfilePic(context, it, holder.profilePic)
+                                }
+                        }
+                        val isLastMessageHasBeenSentByMe =
+                            model.getLastMessageSenderId() == FirebaseUtil.currentUserId()
+                        val isMe = secondUser?.getUid() == FirebaseUtil.currentUserId()
+                        if (isMe) {
+                            holder.usernameTextView.text = secondUser!!.getUsername() + " (Me)"
+                        } else {
+                            holder.usernameTextView.text = secondUser!!.getUsername()
+                        }
+                        try {
+                            if (isLastMessageHasBeenSentByMe && !isMe) {
+                                holder.lastMessageTextView.text = "You : " + model.getLastMessage()
+                                    ?.let { it1 ->
+                                        EncryptionUtil.decrypt(
+                                            it1, context
+                                        )
+                                    }
+                            } else {
+                                holder.lastMessageTextView.text =
+                                    model.getLastMessage()
+                                        ?.let { it1 -> EncryptionUtil.decrypt(it1, context) }
+                            }
+                        } catch (e: javax.crypto.AEADBadTagException) {
+                            print("javax.crypto.AEADBadTagException")
+                        }
+                        if (FirebaseUtil.simpleDateFormat(
+                                Calendar.getInstance().time, "dd/MM/yy"
+                            ) != FirebaseUtil.simpleDateFormat(
+                                model.getLastMessageDate()!!, "dd/MM/yy"
+                            )
+                        ) {
+                            holder.lastmessageDate.text = FirebaseUtil.simpleDateFormat(
+                                model.getLastMessageDate()!!, "dd/MM/yy"
                             )
                         } else {
-                            holder.lastMessageTextView.text =
-                                EncryptionUtil.decrypt(model.getLastMessage(), context)
+                            holder.lastmessageDate.text = FirebaseUtil.simpleDateFormat(
+                                model.getLastMessageDate()!!, "HH:mm"
+                            )
                         }
-                    } catch (e: javax.crypto.AEADBadTagException) {
-                        print("yess")
-                    }
-                    if (FirebaseUtil.simpleDateFormat(
-                            Calendar.getInstance().time, "dd/MM/yy"
-                        ) != FirebaseUtil.simpleDateFormat(
-                            model.getLastMessageDate()!!, "dd/MM/yy"
-                        )
-                    ) {
-                        holder.lastmessageDate.text = FirebaseUtil.simpleDateFormat(
-                            model.getLastMessageDate()!!, "dd/MM/yy"
-                        )
-                    } else {
-                        holder.lastmessageDate.text = FirebaseUtil.simpleDateFormat(
-                            model.getLastMessageDate()!!, "HH:mm"
-                        )
-                    }
-                    holder.recentChatLinearLayout.visibility = View.VISIBLE
-                    ui.hideProgressBar()
-                    holder.itemView.setOnClickListener {
-                        val intent = Intent(context, TalkWithHomieActivity::class.java)
-                        AndroidUtil.passUserModelAsIntent(intent, secondUser)
-                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                        context.startActivity(intent)
-                    }
-
+                        holder.recentChatLinearLayout.visibility = View.VISIBLE
+                        ui.hideProgressBar()
+                        holder.itemView.setOnClickListener {
+                            val intent = Intent(context, TalkWithHomieActivity::class.java)
+                            AndroidUtil.passUserModelAsIntent(intent, secondUser)
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                            context.startActivity(intent)
+                        }
 
                 }
             }
+
         }
-
     }
-
 
     inner class ChatRoomViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val usernameTextView = itemView.findViewById<TextView>(R.id.username_text_view)

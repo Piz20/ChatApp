@@ -7,15 +7,19 @@ class User(
     private var uid: String,
     private var username: String,
     private var phonenumber: String,
-    private var createdAt: Date = Calendar.getInstance().time
+    private var createdAt: Date = Calendar.getInstance().time,
+    private var fcmToken : String = ""
 ) {
-    constructor() : this("", "", "", Calendar.getInstance().time)
+    constructor() : this("", "", "", Calendar.getInstance().time,"")
+
     constructor(uid: String, username: String, phonenumber: String) : this(
         uid,
         username,
         phonenumber,
-        Calendar.getInstance().time
+        Calendar.getInstance().time,
+        ""
     )
+
 
     fun getUid(): String {
         return uid
@@ -50,6 +54,14 @@ class User(
 
     fun setCreatedAt(value: Date) {
         createdAt = value
+    }
+
+    fun getfcmToken(){
+        return getfcmToken()
+    }
+
+    fun setfcmToken(fcmToken: String){
+       this.fcmToken = fcmToken
     }
 }
 

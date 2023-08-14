@@ -10,6 +10,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.chatapp.R
 import com.example.chatapp.models.ChatMessage
+import com.example.chatapp.models.ChatRoom
 import com.example.chatapp.utils.EncryptionUtil
 import com.example.chatapp.utils.FirebaseUtil
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter
@@ -19,6 +20,8 @@ import java.util.Locale
 
 class ChatRecyclerAdapter(options: FirestoreRecyclerOptions<ChatMessage>, context: Context) :
     FirestoreRecyclerAdapter<ChatMessage, ChatRecyclerAdapter.ChatMessageViewHolder>(options) {
+
+    var chatMessageList : MutableList<ChatMessage> = mutableListOf()
 
 
     override fun onCreateViewHolder(
@@ -47,7 +50,9 @@ class ChatRecyclerAdapter(options: FirestoreRecyclerOptions<ChatMessage>, contex
             holder.leftChatTextView.text = EncryptionUtil.decrypt(model.getMessage(),context)
             holder.lefttdateTextView.text = FirebaseUtil.simpleDateFormat(model.getDate(),"HH:mm")
         }
+        chatMessageList.add(model)
     }
+
 
     inner class ChatMessageViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val leftChatLayout:RelativeLayout = itemView.findViewById(R.id.left_chat_relativelayout)

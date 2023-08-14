@@ -1,104 +1,104 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<RelativeLayout android:layout_width="match_parent"
-    android:layout_height="match_parent"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/black"
-    android:orientation="vertical"
-    tools:context=".ProfileFragment"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <RelativeLayout
+            android:id="@+id/profile_relativeLayout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_500pxh"
+            android:background="@color/black"
+            android:orientation="vertical"
+            tools:context=".fragments.ProfileFragment">
 
-    <ImageView
-        android:id="@+id/edit_profile_image"
-        android:layout_width="160dp"
-        android:layout_height="160dp"
-        android:background="@drawable/circular_background"
-        android:scaleType="centerCrop"
-        android:src="@drawable/icon_user"
-        android:layout_above="@id/username_field_edit"
-        android:layout_marginBottom="@dimen/_18sp"
-        android:layout_centerInParent="true"
-        app:tint="@color/black" />
+            <ImageView
+                android:id="@+id/edit_profile_image"
+                android:layout_width="@dimen/_160sp"
+                android:layout_height="@dimen/_160pxh"
+                android:layout_above="@id/username_field_edit"
+                android:layout_centerInParent="true"
+                android:layout_marginBottom="@dimen/_18sp"
+                android:background="@drawable/circular_background"
+                android:scaleType="centerCrop"
+                android:src="@drawable/icon_user"
+                />
 
-    <com.vanniktech.emoji.EmojiTextView
-        android:id="@+id/username_field_edit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/username_field_edit"
-        android:layout_centerInParent="true"
-        android:gravity="center"
-        android:inputType="textPersonName"
-        android:maxLength="20"
-        android:textColor="@color/white"
-        android:textColorHint="@color/black"
-        android:textSize="@dimen/_35pxh"
-        tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck"
-        tools:text="PIZ" />
 
-    <ImageButton
-        android:id="@+id/ic_username_edit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:layout_marginStart="@dimen/_18sp"
-        android:layout_toEndOf="@id/username_field_edit"
-        android:background="?attr/selectableItemBackgroundBorderless"
-        android:src="@drawable/ic_edit" />
+            <com.vanniktech.emoji.EmojiTextView
+                android:id="@+id/username_field_edit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/username_field_edit"
+                android:layout_centerInParent="true"
+                android:gravity="center"
+                android:inputType="textPersonName"
+                android:maxLength="20"
+                android:textColor="@color/white"
+                android:textColorHint="@color/black"
+                android:textSize="@dimen/_30pxh"
+                tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck"
+                tools:text="PIZ" />
 
-    <com.vanniktech.emoji.EmojiTextView
-        android:id="@+id/phone_number_field_edit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColorHint="@color/black"
-        android:maxLength="20"
-        android:inputType="phone"
-        android:layout_marginTop="@dimen/_18sp"
-        android:layout_below="@id/username_field_edit"
-        android:layout_centerInParent="true"
-        android:textColor="@color/white"
-        android:textSize="@dimen/_20pxh"
-        android:gravity="center"
-        tools:text="+000000000000000000000000"
-        tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
 
-    <ImageButton
-        android:id="@+id/ic_phone_number_edit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/ic_username_edit"
-        android:layout_centerInParent="true"
-        android:layout_marginStart="@dimen/_18sp"
-        android:layout_marginTop="@dimen/_30sp"
-        android:layout_toEndOf="@id/phone_number_field_edit"
-        android:background="?attr/selectableItemBackgroundBorderless"
-        android:src="@drawable/ic_edit" />
+            <com.vanniktech.emoji.EmojiTextView
+                android:id="@+id/phone_number_field_edit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/username_field_edit"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="@dimen/_18sp"
+                android:gravity="center"
+                android:inputType="phone"
+                android:maxLength="20"
+                android:textColor="@color/white"
+                android:textColorHint="@color/black"
+                android:textSize="@dimen/_20pxh"
+                tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck"
+                tools:text="+237680687360" />
 
-    <Button
-        android:layout_below="@id/phone_number_field_edit"
-        android:layout_centerInParent="true"
-        android:id="@+id/button_logout"
-        android:layout_gravity="center_horizontal"
-        style="@style/txt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_38pxh"
-        android:layout_marginTop="@dimen/_25pxv"
-        android:layout_marginEnd="@dimen/_38pxh"
-        android:ellipsize="end"
-        android:singleLine="true"
-        android:text="LOGOUT..."
-        android:padding="@dimen/_8pxv"
-        />
 
-    <ProgressBar
-        android:id="@+id/setinfo_pofile_progressbar"
-        android:layout_width="@dimen/_20sp"
-        android:layout_centerInParent="true"
-        android:layout_below="@id/button_logout"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:visibility="gone"
-        android:paddingTop="@dimen/_20sp"/>
+            <Button
+                android:id="@+id/button_logout"
+                style="@style/txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/phone_number_field_edit"
+                android:layout_centerInParent="true"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/_25pxv"
+                android:padding="@dimen/_8pxv"
+                android:singleLine="true"
+                android:text="LEAVE..."
+                android:textSize="@dimen/_15sp" />
 
-</RelativeLayout>
+            <Button
+                android:id="@+id/button_delete_account"
+                style="@style/txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/button_logout"
+                android:layout_centerInParent="true"
+                android:layout_gravity="center_horizontal"
+                android:padding="@dimen/_8pxv"
+                android:singleLine="true"
+                android:text="LEAVE...FOREVER..."
+                android:textSize="@dimen/_15sp" />
+
+            <ProgressBar
+                android:id="@+id/setinfo_pofile_progressbar"
+                android:layout_width="@dimen/_20sp"
+                android:layout_height="wrap_content"
+                android:layout_above="@id/edit_profile_image"
+                android:layout_centerInParent="true"
+                android:layout_gravity="center_horizontal"
+                android:indeterminateTint="@color/white"
+                android:paddingTop="@dimen/_20sp"
+                android:visibility="gone" />
+        </RelativeLayout>
+    </RelativeLayout>
+</ScrollView>

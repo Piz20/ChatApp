@@ -1,4 +1,4 @@
-package com.example.chatapp
+package com.example.chatapp.activities
 
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
@@ -13,7 +13,6 @@ import android.widget.ImageButton
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.annotation.RequiresApi
-import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -25,7 +24,7 @@ import com.algolia.search.exception.AlgoliaClientException
 import com.algolia.search.model.APIKey
 import com.algolia.search.model.ApplicationID
 import com.algolia.search.model.IndexName
-import com.example.chatapp.databinding.ActivityMainBinding
+import com.example.chatapp.R
 import kotlinx.coroutines.launch
 
 class SearchUserActivity : BaseActivity() {

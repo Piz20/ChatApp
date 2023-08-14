@@ -3,7 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".TalkWithHomieActivity">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/black"
+    tools:context=".activities.TalkWithHomieActivity">
 
     <RelativeLayout
         android:id="@+id/toolbar"
@@ -19,7 +21,7 @@
             android:layout_height="@dimen/_48pxh"
             android:layout_marginStart="@dimen/_30sp" />
 
-        <TextView
+        <com.vanniktech.emoji.EmojiTextView
             android:id="@+id/username_textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -40,21 +42,66 @@
             android:background="?attr/selectableItemBackgroundBorderless"
             android:src="@drawable/back_button" />
     </RelativeLayout>
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/chat_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/toolbar"
-        android:layout_above="@id/bottom_layout"
+        android:layout_above="@id/reply_layout"
         android:background="@color/black" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/reply_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:background="@color/replyBackground"
+        android:layout_marginStart="@dimen/_40sp"
+        android:layout_marginEnd="@dimen/_55sp"
+        android:layout_above="@id/bottom_layout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <com.vanniktech.emoji.EmojiTextView
+            android:id="@+id/txtQuotedMsg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_2pxh"
+            android:layout_marginEnd="@dimen/_20pxh"
+            android:maxLines="4"
+            android:maxWidth="@dimen/_250pxh"
+            android:padding="@dimen/_8pxh"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_14sp"
+            android:maxHeight="@dimen/_100sp"
+            android:scrollHorizontally="false"
+            android:ellipsize="end"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/cancelButton"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="ggdddgdfgfg"/>
+        <ImageButton
+            android:id="@+id/cancelButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/_1pxh"
+            android:layout_marginBottom="@dimen/_8pxh"
+            android:background="@drawable/ic_close_black_24dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/reply_layout"/>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
     <RelativeLayout
         android:id="@+id/bottom_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/black"
         android:layout_alignParentBottom="true"
-        android:padding="@dimen/_5sp">
+        >
 
         <ImageButton
             android:id="@+id/emojiButton"
@@ -70,24 +117,24 @@
             android:id="@+id/message_edittext"
             android:layout_width="@dimen/_710pxh"
             android:layout_height="wrap_content"
-            android:maxHeight="@dimen/_130pxh"
-            android:layout_marginStart="@dimen/_3sp"
             android:layout_centerInParent="true"
-            android:layout_toEndOf="@id/emojiButton"
-            android:imeOptions="actionSend"
+            android:layout_marginStart="@dimen/_3sp"
             android:layout_toStartOf="@+id/send_message_button"
+            android:layout_toEndOf="@id/emojiButton"
             android:background="@drawable/rectangle_bg_white_a700_border_black_900_radius_18"
             android:elevation="@dimen/_10sp"
             android:hint="Just communicate..."
-            android:textColorHint="@color/black"
-            android:textColor="@color/black"
-            android:isScrollContainer="true"
-            android:maxLines="10"
-            android:singleLine="false"
-            android:scrollHorizontally="false"
+            android:imeOptions="actionSend"
             android:inputType="textMultiLine|textAutoCorrect|textCapSentences"
-            android:textSize="@dimen/_17sp"
-            android:padding="@dimen/_10pxh" />
+            android:isScrollContainer="true"
+            android:maxHeight="@dimen/_130pxh"
+            android:maxLines="10"
+            android:padding="@dimen/_10pxh"
+            android:scrollHorizontally="false"
+            android:singleLine="false"
+            android:textColor="@color/black"
+            android:textColorHint="@color/black"
+            android:textSize="@dimen/_17sp" />
 
         <ImageButton
             android:id="@+id/send_message_button"
@@ -98,6 +145,5 @@
             android:background="?attr/selectableItemBackgroundBorderless"
             android:src="@drawable/ic_send_impossible" />
 
-
-    </RelativeLayout>
+</RelativeLayout>
 </RelativeLayout>

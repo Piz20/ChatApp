@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#000000">
+    <RelativeLayout
+        android:id="@+id/toolbar_fullscreen_image"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/black"
+        android:padding="@dimen/_10sp"
+        >
+        <ImageButton
+            android:id="@+id/back_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="@dimen/_7sp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/back_button"
+            app:tint="@color/white"
+           />
+        <TextView
+            android:id="@+id/dialog_toolbar_picture_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginStart="@dimen/_10sp"
+            android:text="Your face"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_20sp"
+            android:textStyle="bold" />
+        <ImageButton
+            android:id="@+id/edit_profile_picture"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/dialog_toolbar_picture_textview"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="@dimen/_7sp"
+            android:layout_marginStart="@dimen/_30sp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_edit"
+            app:tint="@color/white"
+            />
+        <ImageButton
+            android:id="@+id/delete_profile_picture"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/edit_profile_picture"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="@dimen/_7sp"
+            android:layout_marginStart="@dimen/_40sp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_delete"
+            />
+    </RelativeLayout>
+    <ProgressBar
+        android:id="@+id/fullscreenimage_progressbar"
+        android:layout_width="@dimen/_32sp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_40sp"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center_vertical"
+        android:indeterminateTint="@color/white"
+        android:paddingTop="@dimen/_20sp"
+        android:visibility="gone" />
+    <com.github.chrisbanes.photoview.PhotoView
+        android:layout_below="@id/toolbar_fullscreen_image"
+        android:id="@+id/fullscreen_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        />
+
+</RelativeLayout>

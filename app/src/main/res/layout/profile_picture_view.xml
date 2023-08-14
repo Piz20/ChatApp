@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    >
 <ImageView
     android:id="@+id/profile_picture_image_view"
     android:layout_width="@dimen/_52pxv"
@@ -10,5 +10,5 @@
     android:src="@drawable/icon_user"
     android:padding="@dimen/_4sp"
     android:background="@drawable/circular_background"
-    app:tint="#D3D3D3"/>
+    />
 </RelativeLayout>

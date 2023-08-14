@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <com.hbb20.CountryCodePicker
+        android:id="@+id/countryCodePicker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="20dp"
+        app:ccp_contentColor="@color/black"
+        android:singleLine="true"
+        app:ccp_defaultNameCode="CM"
+        app:ccp_showPhoneCode="true"
+        app:ccpDialog_background="@color/white"
+        app:ccp_showNameCode="false" />
+
+    <EditText
+        android:id="@+id/editText"
+        android:layout_toEndOf="@id/countryCodePicker"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+         />
+
+</RelativeLayout>

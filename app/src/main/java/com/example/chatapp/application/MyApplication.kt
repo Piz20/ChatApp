@@ -1,4 +1,4 @@
-package com.example.chatapp
+package com.example.chatapp.application
 
 import android.app.Application
 import android.content.pm.ApplicationInfo

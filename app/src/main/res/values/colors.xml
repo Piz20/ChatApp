@@ -10,4 +10,6 @@
 <color name="black_900">#000000</color>
 <color name="black_900_3f">#3f000000</color>
 <color name="white_A700">#ffffff</color>
+    <color name="colorE">#c4c4c4</color>
+    <color name="replyBackground">#DADADA</color>
 </resources>

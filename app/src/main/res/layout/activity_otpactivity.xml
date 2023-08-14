@@ -80,6 +80,7 @@
                 android:id="@+id/send_code_progressbar"
                 android:layout_width="@dimen/_20sp"
                 android:layout_height="match_parent"
+                android:indeterminateTint="@color/white"
                 android:paddingTop="@dimen/_20sp" />
 
             <TextView

@@ -7,10 +7,10 @@ class ChatRoom(
     private var chatroomId: String,
     private var userIds: List<String>?,
     private var lastMessageDate: Date?,
-    private var lastMessageSenderId: String ,
-    private var lastMessage : String
+    private var lastMessageSenderId: String? ,
+    private var lastMessage : String? ,
 ) {
-    constructor() : this("", null, null, "","")
+    constructor() : this("", null, null, null,null)
 
     fun getChatroomId(): String {
         return chatroomId
@@ -34,12 +34,12 @@ class ChatRoom(
         return lastMessageDate
     }
 
-    fun setLastMessageDate(value: Date) {
+    fun setLastMessageDate(value: Date?) {
         lastMessageDate = value
     }
 
     // Getter et Setter pour la propriété lastMessageSenderId
-    fun getLastMessageSenderId(): String {
+    fun getLastMessageSenderId(): String? {
         return lastMessageSenderId
     }
 
@@ -47,7 +47,7 @@ class ChatRoom(
         lastMessageSenderId = value
     }
 
-    fun getLastMessage() : String{
+    fun getLastMessage() : String?{
         return lastMessage
     }
 

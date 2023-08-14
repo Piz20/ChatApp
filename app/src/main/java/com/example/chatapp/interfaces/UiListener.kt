@@ -1,4 +1,4 @@
-package com.example.chatapp.adapter
+package com.example.chatapp.interfaces
 
 
 interface UiListener {
