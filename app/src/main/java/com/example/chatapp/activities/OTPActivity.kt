@@ -148,7 +148,7 @@ class OTPActivity : BaseActivity() {
                 }
 
                 override fun onVerificationFailed(exception: FirebaseException) {
-                    showSnackBar("Code verification failed").show()
+                    showSnackBar("Code verification failed , try again later").show()
                     setInProgress(false)
                 }
 

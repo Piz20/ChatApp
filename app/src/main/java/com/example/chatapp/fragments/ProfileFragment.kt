@@ -90,14 +90,14 @@ class ProfileFragment : Fragment() {
         val dcimDirectory = File(requireContext().getExternalFilesDir(null), "DCIM")
         if (dcimDirectory.exists() && dcimDirectory.isDirectory) {
             val files = dcimDirectory.listFiles()
-            if (files != null && files.size > 2) {
-                // Triez les fichiers par date de modification (le plus récent en premier)
+            if (files != null && files.size > 1) {
+                // Trier les fichiers par date de modification (le plus récent en premier)
                 files.sortByDescending { it.lastModified() }
 
-                // Conservez les deux derniers fichiers
-                val filesToKeep = files.take(2)
+                // Conserver le dernier fichier
+                val filesToKeep = files.take(1)
 
-                // Supprimez les autres fichiers
+                // Supprimer les autres fichiers
                 for (file in files) {
                     if (file !in filesToKeep) {
                         file.delete()
