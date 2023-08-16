@@ -123,9 +123,11 @@ class RecentChatRecyclerAdapter(
         super.onDataChanged()
         if (itemCount == 0) {
             ui.hideProgressBar()
-            ui.showNoTalksTextView()
+            ui.hideDeleteAllChatRoomsButton(true)
+            ui.hideNoTalksTextView(false)
         } else {
-            ui.hideNoTalksTextView()
+            ui.hideNoTalksTextView(true)
+            ui.hideDeleteAllChatRoomsButton(false)
         }
     }
 }

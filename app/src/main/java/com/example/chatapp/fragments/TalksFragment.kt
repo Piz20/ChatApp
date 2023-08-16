@@ -1,9 +1,11 @@
 package com.example.chatapp.fragments
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.fragment.app.Fragment
@@ -16,6 +18,7 @@ import com.example.chatapp.models.ChatRoom
 import com.example.chatapp.utils.FirebaseUtil
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.firebase.firestore.CollectionReference
+import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 
@@ -23,6 +26,7 @@ class TalksFragment : Fragment(), UiListener {
     lateinit var recentchatRecyclerView: RecyclerView
     lateinit var recentchatAdapter: RecentChatRecyclerAdapter
     lateinit var progressBar: ProgressBar
+    lateinit var deleteallchatroomsButton: ImageButton
     lateinit var notalksTextView: TextView
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,17 +35,36 @@ class TalksFragment : Fragment(), UiListener {
         val view = inflater.inflate(R.layout.fragment_talks, container, false)
         recentchatRecyclerView = view.findViewById(R.id.recent_chat_recycler_view)
         progressBar = view.findViewById(R.id.recent_chat_progressbar)
+        deleteallchatroomsButton = requireActivity().findViewById(R.id.delete_all_chatrooms_button)
         notalksTextView = view.findViewById(R.id.no_talks_textView)
         setupRecentChatRecyclerView()
+        setupUi()
         return view
+    }
+
+    //Basic ui setup
+    fun setupUi() {
+        deleteallchatroomsButton.setOnClickListener {
+            val dialog = AlertDialog.Builder(requireContext())
+                .setTitle("Delete all the chats ?")
+                .setPositiveButton("OK") { dialog, _ ->
+                    setInProgress(true)
+                    deleteAllChatRoomsForTheCurrentUser()
+                }
+                .setNegativeButton("Cancel") { dialog, _ ->
+
+                }
+                .create()
+            dialog.show()
+        }
     }
 
     private fun setupRecentChatRecyclerView() {
         val query: Query = FirebaseUtil.allChatRoomCollectionReference()
             .whereArrayContains("userIds", FirebaseUtil.currentUserId()!!)
-            .whereNotEqualTo("lastMessage","")
-            .orderBy("lastMessage")
+            .whereNotEqualTo("lastMessageDate",null)
             .orderBy("lastMessageDate", Query.Direction.DESCENDING)
+
 
         val options: FirestoreRecyclerOptions<ChatRoom?> =
             FirestoreRecyclerOptions.Builder<ChatRoom>()
@@ -54,22 +77,69 @@ class TalksFragment : Fragment(), UiListener {
         recentchatRecyclerView.adapter = recentchatAdapter
         recentchatAdapter.startListening()
 
+    }
+
+    //When we want to delete all chats
+    fun setInProgress(boolean: Boolean) {
+        if (boolean) {
+            recentchatRecyclerView.visibility = View.GONE
+            progressBar.visibility = View.VISIBLE
+        } else {
+            progressBar.visibility = View.GONE
+            recentchatRecyclerView.visibility = View.VISIBLE
+        }
+    }
+
+    //hide progressbar
+    override fun hideProgressBar() {
+        progressBar.visibility = View.GONE
+    }
+
+    //hide notalkstextview
+    override fun hideNoTalksTextView(boolean: Boolean) {
+        if (boolean)
+            notalksTextView.visibility = View.GONE
+        else
+            notalksTextView.visibility = View.VISIBLE
+    }
+
+    //hide deleteallchatroomsbutton
+    override fun hideDeleteAllChatRoomsButton(boolean: Boolean) {
+        if (boolean)
+            deleteallchatroomsButton.visibility = View.GONE
+        else
+            deleteallchatroomsButton.visibility = View.VISIBLE
 
     }
-    fun deleteDocumentAndSubcollection(collectionPath: String, documentId: String, subcollectionPath: String) {
+
+    //deleteAllChatRooms for the current user
+    fun deleteAllChatRoomsForTheCurrentUser() {
+        FirebaseUtil.allChatRoomCollectionReference()
+            .whereArrayContains("userIds", FirebaseUtil.currentUserId()!!).get()
+            .addOnSuccessListener {
+                for (documentSnapshot: DocumentSnapshot in it) {
+                    deleteDocumentAndSubcollection("chatrooms", documentSnapshot.id, "chats")
+                }
+            }
+    }
+
+    fun deleteDocumentAndSubcollection(
+        collectionPath: String,
+        documentId: String,
+        subcollectionPath: String
+    ) {
         val db = FirebaseFirestore.getInstance()
         val documentReference = db.collection(collectionPath).document(documentId)
 
-        // Suppression du document principal
+        // Suppressing principal document
         documentReference.delete()
             .addOnSuccessListener {
-                // Suppression des documents dans la sous-collection
+                // Suppressig docs in the subcollection
                 val subcollectionReference = documentReference.collection(subcollectionPath)
                 deleteCollection(subcollectionReference)
             }
-            .addOnFailureListener { exception ->
-                // Gérer les erreurs
-                println("Erreur lors de la suppression du document principal : $exception")
+            .addOnFailureListener {
+                setInProgress(false)
             }
     }
 
@@ -82,29 +152,21 @@ class TalksFragment : Fragment(), UiListener {
                     batch.delete(documentSnapshot.reference)
                 }
 
-                // Exécution de la suppression en lot pour la sous-collection
+                // Suppreesing in mass of the subcollection
                 batch.commit()
                     .addOnSuccessListener {
-                        println("Sous-collection supprimée avec succès")
+                        setInProgress(false)
                     }
-                    .addOnFailureListener { exception ->
-                        println("Erreur lors de la suppression de la sous-collection : $exception")
+                    .addOnFailureListener {
+                        setInProgress(false)
                     }
             }
-            .addOnFailureListener { exception ->
-                println("Erreur lors de la récupération des documents de la sous-collection : $exception")
-            }}
-
-override fun hideProgressBar() {
-    progressBar.visibility = View.GONE
-}
-
-override fun showNoTalksTextView() {
-    notalksTextView.visibility = View.VISIBLE
-}
-
-    override fun hideNoTalksTextView() {
-        notalksTextView.visibility = View.GONE
+            .addOnFailureListener {
+                setInProgress(false)
+            }
     }
 
+
 }
+
+

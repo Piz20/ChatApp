@@ -56,11 +56,11 @@ class User(
         createdAt = value
     }
 
-    fun getfcmToken(){
-        return getfcmToken()
+    fun getFcmToken() : String{
+        return fcmToken
     }
 
-    fun setfcmToken(fcmToken: String){
+    fun setFcmToken(fcmToken: String){
        this.fcmToken = fcmToken
     }
 }

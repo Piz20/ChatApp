@@ -15,8 +15,10 @@ class SplashScreenActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         if( FirebaseUtil.isLoggedIn() && intent.extras!= null){
+
         //from a notification
-           val  userId : String? = intent.extras!!.getString("userId")
+           val  userId : String? = intent.extras!!.getString("uid")
+            println(userId)
             if (userId != null) {
                 FirebaseUtil.usersCollection().document(userId).get()
                     .addOnCompleteListener{

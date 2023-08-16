@@ -20,6 +20,7 @@ class AndroidUtil {
             intent.putExtra("uid", user.getUid())
             intent.putExtra("username", user.getUsername())
             intent.putExtra("phonenumber", user.getPhonenumber())
+            intent.putExtra("fcmToken",user.getFcmToken())
         }
 
         fun getUserModelFromIntent(intent: Intent): User {
@@ -27,13 +28,17 @@ class AndroidUtil {
             secondUser.setUid(intent.getStringExtra("uid").toString())
             secondUser.setUsername(intent.getStringExtra("username").toString())
             secondUser.setPhonenumber(intent.getStringExtra("phonenumber").toString())
-
+            secondUser.setFcmToken(intent.getStringExtra("fcmToken").toString())
             return secondUser
         }
 
         fun setProfilePic(context : Context , imageUri: Uri, imageView: ImageView){
-            Glide.with(context).load(imageUri).error(R.drawable.icon_user).apply(RequestOptions.circleCropTransform()).into(imageView)
+            try {
+                Glide.with(context).load(imageUri).error(R.drawable.icon_user)
+                    .apply(RequestOptions.circleCropTransform()).into(imageView)
+            }catch (_:java.lang.IllegalArgumentException){
 
+            }
         }
         fun dp(value: Float, context: Context): Int {
             if (density == 1f) {

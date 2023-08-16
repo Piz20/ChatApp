@@ -46,9 +46,9 @@
                 android:layout_marginTop="@dimen/_126pxv"
                 android:layout_marginEnd="@dimen/_52pxh"
                 android:scaleType="fitXY"
-                android:src="@drawable/img_chhut1"
+                android:src="@drawable/img_chut"
                 tools:ignore="ContentDescription"
-                tools:src="@drawable/img_chhut1" />
+                tools:src="@drawable/img_chut" />
 
             <TextView
                 android:id="@+id/txtENTERTHECODE"

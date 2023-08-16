@@ -13,7 +13,13 @@
         android:layout_height="wrap_content"
         android:background="@color/white"
         android:padding="@dimen/_10sp">
-
+        <ImageButton
+            android:id="@+id/back_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/back_button" />
         <include
             android:id="@+id/profile_picture_view"
             layout="@layout/profile_picture_view"
@@ -27,20 +33,22 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:layout_marginStart="@dimen/_10sp"
-            android:layout_toRightOf="@id/profile_picture_view"
+            android:layout_toEndOf="@id/profile_picture_view"
             android:text="Username"
             android:textColor="@color/black"
             android:textSize="@dimen/_20sp"
             android:textStyle="bold" />
-
         <ImageButton
-            android:id="@+id/back_button"
+            android:id="@+id/delete_chatroom_button"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/_40sp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="@dimen/_8pxh"
             android:layout_centerVertical="true"
-            android:layout_marginTop="@dimen/_7sp"
             android:background="?attr/selectableItemBackgroundBorderless"
-            android:src="@drawable/back_button" />
+            android:src="@drawable/ic_delete"
+            app:tint="@color/black"/>
+
     </RelativeLayout>
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/chat_recycler_view"
@@ -49,6 +57,13 @@
         android:layout_below="@id/toolbar"
         android:layout_above="@id/reply_layout"
         android:background="@color/black" />
+    <ProgressBar
+        android:id="@+id/delete_chatroom_progressbar"
+        android:layout_width="@dimen/_40pxh"
+        android:layout_height="@dimen/_40sp"
+        android:indeterminateTint="@color/white"
+        android:visibility="gone"
+        android:layout_centerInParent="true"/>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/reply_layout"

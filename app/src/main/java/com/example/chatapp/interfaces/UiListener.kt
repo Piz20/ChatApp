@@ -3,6 +3,6 @@ package com.example.chatapp.interfaces
 
 interface UiListener {
     fun hideProgressBar()
-    fun showNoTalksTextView()
-    fun hideNoTalksTextView()
+    fun hideNoTalksTextView(boolean: Boolean)
+    fun hideDeleteAllChatRoomsButton(boolean: Boolean)
 }

@@ -51,7 +51,7 @@
                 android:layout_marginTop="@dimen/_59pxv"
                 android:layout_marginEnd="@dimen/_14pxh"
                 android:scaleType="fitXY"
-                android:src="@drawable/img_chhut1" />
+                android:src="@drawable/img_chut" />
 
             <LinearLayout
                 android:id="@+id/linearColumnlanguage"

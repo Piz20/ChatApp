@@ -19,6 +19,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat"
         tools:targetApi="31">
+        <meta-data android:name="com.google.firebase.messaging.default_notification_color" android:resource="@color/black" />
         <activity
             android:name=".activities.BaseActivity"
             android:exported="false" />
@@ -69,7 +70,9 @@
         <meta-data
             android:name="SECRET_KEY_FOR_ENCRYPTION"
             android:value="${SECRET_KEY_FOR_ENCRYPTION}" />
-
+        <meta-data
+            android:name="FIREBASE_MESSAGING_SERVER_KEY"
+            android:value="${FIREBASE_MESSAGING_SERVER_KEY}" />
         <service android:name=".services.FCMNotficationService" android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT"/>

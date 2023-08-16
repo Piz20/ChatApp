@@ -12,9 +12,19 @@
     <RelativeLayout
         android:id="@+id/main_toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/_47sp"
         android:background="@color/white"
         android:padding="@dimen/_10sp">
+
+        <ImageButton
+            android:id="@+id/delete_all_chatrooms_button"
+            android:layout_width="@dimen/_32sp"
+            android:layout_height="@dimen/_32sp"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_delete"
+            app:tint="@color/black"/>
 
         <TextView
             android:layout_width="wrap_content"
